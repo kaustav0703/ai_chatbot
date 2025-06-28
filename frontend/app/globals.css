@@ -1,0 +1,29 @@
+/* app/globals.css */
+@import "tailwindcss";
+
+/* Hide scrollbar but keep scrollability */
+.scrollbar-none::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+.scrollbar-none {
+  -ms-overflow-style: none; /* IE/Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.perspective {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
