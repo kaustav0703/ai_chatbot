@@ -13,6 +13,7 @@ export default function ChatSection() {
   const [isLoading, setIsLoading] = useState(false);
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
   const chatContainerRef = useRef<HTMLDivElement | null>(null);
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 
   useEffect(() => {
@@ -32,7 +33,7 @@ export default function ChatSection() {
 
     try {
       setIsLoading(true);
-      const response = await axios.post('http://localhost:5000/chat/', { message }, {
+      const response = await axios.post(`${backendUrl}/chat/`, { message }, {
         headers: {
           'Content-Type': 'application/json'
         }

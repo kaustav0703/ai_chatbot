@@ -7,7 +7,7 @@ interface Props {
 }
 
 export default function Signin({ onFlip }: Props) {
-
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   const [form, setForm] = useState({ email: '', password: '' });
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -17,7 +17,7 @@ export default function Signin({ onFlip }: Props) {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/user/signin', form);
+      const response = await axios.post(`${backendUrl}/user/signin`, form);
       if (response.status === 200) {
         alert(response.data.message);
       }

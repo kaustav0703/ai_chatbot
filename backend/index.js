@@ -11,7 +11,28 @@ dotenv.config();
 // Create Express App
 const app = express();
 const PORT = process.env.PORT || 8000;
-app.use(cors());
+
+const allowedOrigins = [
+  'http://localhost:3000',
+  /\.vercel\.app$/ // allows any *.vercel.app
+];
+
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.some(o =>
+      typeof o === 'string' ? o === origin : o.test(origin)
+    )) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
+
 app.use(express.json());
 
 // Routes

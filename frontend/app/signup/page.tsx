@@ -11,6 +11,7 @@ interface Props {
 export default function Signup({ onFlip }: Props) {
   const [form, setForm] = useState({ username: '', email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -19,8 +20,9 @@ export default function Signup({ onFlip }: Props) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`http://localhost:5000/user/signup`, form);
+      const response = await axios.post(`${backendUrl}/user/signup`, form);
       if (response.status === 201 || response.status === 200) {
+        console.log('jasl;knmkasmkasmlkasmlkasnmkmaskmaslkasm');
         alert(response.data.message);
         onFlip(); // Flip to sign-in
       }
