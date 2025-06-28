@@ -3,15 +3,13 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { UserPlus } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
-interface Props {
-  onFlip: () => void;
-}
-
-export default function Signup({ onFlip }: Props) {
+export default function Signup() {
   const [form, setForm] = useState({ username: '', email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+  const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -22,15 +20,18 @@ export default function Signup({ onFlip }: Props) {
     try {
       const response = await axios.post(`${backendUrl}/user/signup`, form);
       if (response.status === 201 || response.status === 200) {
-        console.log('jasl;knmkasmkasmlkasmlkasnmkmaskmaslkasm');
         alert(response.data.message);
-        onFlip(); // Flip to sign-in
+        router.push('/signup?mode=signin'); // Navigate to signin mode
       }
     } catch (error: any) {
       if (error.response?.status === 400) {
         alert(error.response.data.error);
       }
     }
+  };
+
+  const handleSignInClick = () => {
+    router.push('/signup?mode=signin');
   };
 
   return (
@@ -85,7 +86,7 @@ export default function Signup({ onFlip }: Props) {
       </form>
       <p className="text-sm text-center mt-4 text-gray-400">
         Already have an account?{' '}
-        <button onClick={onFlip} className="text-indigo-400 hover:underline">
+        <button onClick={handleSignInClick} className="text-indigo-400 hover:underline">
           Sign In
         </button>
       </p>
